@@ -1,5 +1,7 @@
 # Go Learning To-Do List
 
+![Go-Todo-List](assets/go-todo-list.png)
+
 This project is a personal Go (Golang) learning exercise designed to help me understand the basics of Go programming. The project focuses on building a task management system where I can track tasks and their subtasks, implementing basic HTTP handling to display tasks, and learning key Go concepts along the way.
 
 The tasks in this project represent different areas of Go that I aim to master, including setting up the Go development environment, learning Go syntax, and building a simple Todo app.
@@ -7,6 +9,8 @@ The tasks in this project represent different areas of Go that I aim to master, 
 The goal of this project is to solidify my understanding of Go by actively applying what I’ve learned and making incremental improvements.
 
 ## Current Features
+
+![Go-Todo-List](assets/go-todo-list1.png)
 
 1. Task List: The main feature is a task list with subtasks that are displayed through an HTTP handler. The task list includes:
 
@@ -33,7 +37,6 @@ During the development of this project, I learned the following key Go concepts:
 
 ## Next Steps in Learning Go
 
-- Create UI using React and fetch the data.
 - Testing: I need to learn first how to do testing in Neovim.
 - Error Handling: I'll work on improving error handling throughout the application, especially in the HTTP handler and other critical areas.
 - Concurrency: Learning Go's concurrency model using Goroutines and Channels is a major next step, as Go’s strength lies in handling concurrent processes efficiently.
