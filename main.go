@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 // Define constants for task titles and subtasks
@@ -63,12 +64,13 @@ func NewTask(title string, subTasks []string) Task {
 }
 
 // Method to print the task and subtasks
-func (t Task) Print() {
-	fmt.Println(t.Title)
+func (t Task) Print() string {
+	var result strings.Builder
+	result.WriteString(t.Title + "\n")
 	for _, subTask := range t.SubTasks {
-		fmt.Printf("  - %s\n", subTask)
+		result.WriteString(fmt.Sprintf("  - %s\n", subTask))
 	}
-	fmt.Println()
+	return result.String()
 }
 
 // Method to add a task to a task list
@@ -76,12 +78,14 @@ func (tl *TaskList) AddTask(task Task) {
 	tl.Tasks = append(tl.Tasks, task)
 }
 
-// Method to print all tasks in the list
-func (tl TaskList) PrintAll() {
-	fmt.Println("###### Golang Learning To-Dos: ######")
+// Method to print all tasks in the list as a string
+func (tl TaskList) PrintAll() string {
+	var result strings.Builder
+	result.WriteString("###### Golang Learning To-Dos: ######\n")
 	for _, task := range tl.Tasks {
-		task.Print()
+		result.WriteString(task.Print())
 	}
+	return result.String()
 }
 
 // Task creation functions to keep main clean and organized
@@ -123,27 +127,25 @@ func createTodoAppCreationTask() Task {
 	})
 }
 
-// Greeting handler function
-func helloGoUser(w http.ResponseWriter, r *http.Request) {
-	// Greeting message
-	var greeting = "Hello there! 👋🏻 Welcome to my Todolist App"
-	fmt.Fprintln(w, greeting)
-}
-
-func main() {
+// Greeting handler function to show tasks
+func showTasks(w http.ResponseWriter, r *http.Request) {
 	// Initialize the task list
 	taskList := TaskList{}
-
-	http.HandleFunc("/main.go", helloGoUser)
-
-	// Start the server on port 3000
-	http.ListenAndServe(":3000", nil)
 
 	// Add tasks to the task list
 	taskList.AddTask(createDevEnvSetupTask())
 	taskList.AddTask(createGoSyntaxLearningTask())
 	taskList.AddTask(createTodoAppCreationTask())
 
-	// Print all tasks in the list
-	taskList.PrintAll()
+	// Print all tasks as a string and write to the HTTP response
+	tasks := taskList.PrintAll()
+	fmt.Fprintln(w, tasks)
+}
+
+func main() {
+	// Set up HTTP handler to show tasks
+	http.HandleFunc("/", showTasks)
+
+	// Start the server on port 3000
+	http.ListenAndServe(":3000", nil)
 }
