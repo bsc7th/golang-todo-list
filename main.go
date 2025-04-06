@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 )
 
 // Define constants for task titles and subtasks
@@ -125,6 +126,7 @@ func createTodoAppCreationTask() Task {
 func main() {
 	// Initialize the task list
 	taskList := TaskList{}
+	http.ListenAndServe
 
 	// Add tasks to the task list
 	taskList.AddTask(createDevEnvSetupTask())
