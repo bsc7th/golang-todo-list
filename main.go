@@ -126,7 +126,7 @@ func main() {
 	http.HandleFunc("/", showTasks)
 
 	// Start the server on port 3000 and check for errors
-	fmt.Println("Server started at http://localhost:4175")
+		fmt.Println("Server started at http://localhost:4175")
 	if err := http.ListenAndServe(":4175", nil); err != nil {
 		fmt.Printf("Error starting server: %v\n", err)
 	}
