@@ -1,9 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 )
 
 // Define constants for task titles and subtasks
@@ -46,13 +46,13 @@ const (
 
 // Task struct for better structure
 type Task struct {
-	Title    string
-	SubTasks []string
+	Title    string   `json:"title"`
+	SubTasks []string `json:"subTasks"`
 }
 
 // TaskList to manage multiple tasks
 type TaskList struct {
-	Tasks []Task
+	Tasks []Task `json:"tasks"`
 }
 
 // Constructor for creating a new task
@@ -61,34 +61,6 @@ func NewTask(title string, subTasks []string) Task {
 		Title:    title,
 		SubTasks: subTasks,
 	}
-}
-
-// Method to print the task and subtasks
-func (t Task) Print() string {
-	var result strings.Builder
-	result.WriteString(t.Title + "\n")
-	for _, subTask := range t.SubTasks {
-		result.WriteString(fmt.Sprintf("  - %s\n", subTask))
-	}
-	return result.String()
-}
-
-// Method to add a task to a task list
-func (tl *TaskList) AddTask(task Task) {
-	tl.Tasks = append(tl.Tasks, task)
-}
-
-// Method to print all tasks in the list as a string
-func (tl TaskList) PrintAll() string {
-	var result strings.Builder
-	result.WriteString("###### Golang Learning To-Dos: ######\n")
-	for i, task := range tl.Tasks {
-		result.WriteString(task.Print())
-		if i < len(tl.Tasks)-1 { // Avoid adding extra newline after the last task
-			result.WriteString("\n") // Add a new line after each main task
-		}
-	}
-	return result.String()
 }
 
 // Task creation functions to keep main clean and organized
@@ -130,25 +102,32 @@ func createTodoAppCreationTask() Task {
 	})
 }
 
-// Greeting handler function to show tasks
+// Handler function to show tasks
 func showTasks(w http.ResponseWriter, r *http.Request) {
 	// Initialize the task list
 	taskList := TaskList{}
 
 	// Add tasks to the task list
-	taskList.AddTask(createDevEnvSetupTask())
-	taskList.AddTask(createGoSyntaxLearningTask())
-	taskList.AddTask(createTodoAppCreationTask())
+	taskList.Tasks = append(taskList.Tasks, createDevEnvSetupTask())
+	taskList.Tasks = append(taskList.Tasks, createGoSyntaxLearningTask())
+	taskList.Tasks = append(taskList.Tasks, createTodoAppCreationTask())
 
-	// Print all tasks as a string and write to the HTTP response
-	tasks := taskList.PrintAll()
-	fmt.Fprintln(w, tasks)
+	// Set the response header to indicate JSON content
+	w.Header().Set("Content-Type", "application/json")
+
+	// Respond with the tasks in JSON format
+	if err := json.NewEncoder(w).Encode(taskList); err != nil {
+		http.Error(w, "Unable to encode tasks to JSON", http.StatusInternalServerError)
+	}
 }
 
 func main() {
 	// Set up HTTP handler to show tasks
 	http.HandleFunc("/", showTasks)
 
-	// Start the server on port 3000
-	http.ListenAndServe(":3000", nil)
+	// Start the server on port 3000 and check for errors
+	fmt.Println("Server started at http://localhost:3000")
+	if err := http.ListenAndServe(":3000", nil); err != nil {
+		fmt.Printf("Error starting server: %v\n", err)
+	}
 }
