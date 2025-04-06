@@ -126,7 +126,14 @@ func createTodoAppCreationTask() Task {
 func main() {
 	// Initialize the task list
 	taskList := TaskList{}
-	http.ListenAndServe
+	// This function takes two parameters:
+	// 1. Address: The address to which the server should bind (in this case, ":3000").
+	// 2. Handler: A request handler (currently set to nil, meaning default multiplexer is used).
+
+	// When the application starts, it will return a '404' error for any unhandled requests.
+	// This indicates that the server is running, but there are no routes defined to handle the request.
+	// If the server were not running, attempting to access the address would result in "Site can't be reached" error.
+	http.ListenAndServe(":3000", nil)
 
 	// Add tasks to the task list
 	taskList.AddTask(createDevEnvSetupTask())
