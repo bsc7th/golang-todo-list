@@ -123,16 +123,20 @@ func createTodoAppCreationTask() Task {
 	})
 }
 
+// Greeting handler function
+func helloGoUser(w http.ResponseWriter, r *http.Request) {
+	// Greeting message
+	var greeting = "Hello there! 👋🏻 Welcome to my Todolist App"
+	fmt.Fprintln(w, greeting)
+}
+
 func main() {
 	// Initialize the task list
 	taskList := TaskList{}
-	// This function takes two parameters:
-	// 1. Address: The address to which the server should bind (in this case, ":3000").
-	// 2. Handler: A request handler (currently set to nil, meaning default multiplexer is used).
 
-	// When the application starts, it will return a '404' error for any unhandled requests.
-	// This indicates that the server is running, but there are no routes defined to handle the request.
-	// If the server were not running, attempting to access the address would result in "Site can't be reached" error.
+	http.HandleFunc("/", helloGoUser)
+
+	// Start the server on port 3000
 	http.ListenAndServe(":3000", nil)
 
 	// Add tasks to the task list
