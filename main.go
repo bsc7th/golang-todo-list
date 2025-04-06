@@ -82,9 +82,11 @@ func (tl *TaskList) AddTask(task Task) {
 func (tl TaskList) PrintAll() string {
 	var result strings.Builder
 	result.WriteString("###### Golang Learning To-Dos: ######\n")
-	for _, task := range tl.Tasks {
+	for i, task := range tl.Tasks {
 		result.WriteString(task.Print())
-		result.WriteString("\n") // Add a new line after each main task
+		if i < len(tl.Tasks)-1 { // Avoid adding extra newline after the last task
+			result.WriteString("\n") // Add a new line after each main task
+		}
 	}
 	return result.String()
 }
