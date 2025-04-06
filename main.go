@@ -134,7 +134,7 @@ func main() {
 	// Initialize the task list
 	taskList := TaskList{}
 
-	http.HandleFunc("/", helloGoUser)
+	http.HandleFunc("/main.go", helloGoUser)
 
 	// Start the server on port 3000
 	http.ListenAndServe(":3000", nil)
