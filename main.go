@@ -44,6 +44,15 @@ func main() {
 	fmt.Println(taskTwoA)
 	fmt.Println(taskTwoB)
 	fmt.Println(taskTwoC)
+	fmt.Println(taskTwoD)
+	fmt.Println(taskTwoE)
+	fmt.Println(taskTwoF)
+	fmt.Println(taskTwoG)
+	fmt.Println(taskTwoH)
+	fmt.Println(taskTwoI)
+	fmt.Println(taskTwoJ)
+	fmt.Println(taskTwoK)
+	fmt.Println(taskTwoL)
 
 	fmt.Println()  // new line
 	fmt.Println(taskThree)
