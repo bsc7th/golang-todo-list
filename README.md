@@ -33,6 +33,7 @@ During the development of this project, I learned the following key Go concepts:
 
 ## Next Steps in Learning Go
 
+- Create UI using React and fetch the data.
 - Testing: I need to learn first how to do testing in Neovim.
 - Error Handling: I'll work on improving error handling throughout the application, especially in the HTTP handler and other critical areas.
 - Concurrency: Learning Go's concurrency model using Goroutines and Channels is a major next step, as Go’s strength lies in handling concurrent processes efficiently.
